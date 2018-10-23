@@ -1,3 +1,5 @@
+#coding=utf-8
+
 """
 Django settings for dailyfresh project.
 
@@ -38,6 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'df_user',
+    'df_goods',
+    'df_cart',
+    'df_order',
+    'tinymce',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +135,33 @@ STATICFILES_DIRS  = [
     os.path.join(BASE_DIR, 'static'),
 
 ]
+# 测试环境用的路径
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+
+# 生产环境即部署的时候用的路径
+# MEDIA_ROOT = '/var/www/dailyfresh/static'
+
+# 富文本编辑器的配置
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+}
+
+# 全文检索haystack配置
+HAYSTACK_CONNECTIONS = {
+    'default':{
+        'ENGINE':'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'PATH':os.path.join(BASE_DIR, 'whoosh_index'),
+
+
+    }
+
+}
+
+#自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+# 配置一行显示多少条数据
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 18
